@@ -1,0 +1,26 @@
+{
+  "name": "rent-cards-api",
+  "version": "1.0.0",
+  "description": "Api de la pagina de rent cards de mi portafolio",
+  "main": "api/server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wilmion/rentCardAPI.git"
+  },
+  "keywords": [
+    "api",
+    "cart",
+    "auto",
+    "wilmion",
+    "backend"
+  ],
+  "author": "Wilbert Navarrete",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/wilmion/rentCardAPI/issues"
+  },
+  "homepage": "https://github.com/wilmion/rentCardAPI#readme"
+}
