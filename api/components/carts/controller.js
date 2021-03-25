@@ -9,36 +9,38 @@ class controllerCarts {
     constructor () {
         this.collection = 'carts';
     }
-
-    getAll(query) {
+    async getAll(query) {
         const { limit , mark , mincc , type } = query;
-        let carts = cartsDatabase.getAll(Number(limit));
+        let carts = await cartsDatabase.getAll(Number(limit));
 
         if(mark) {
-            carts = carts.map(c => c.mark === mark);
+            carts = await carts.map(c => c.mark === mark);
         }
         if(mincc) {
-            carts = carts.map(c => c.features.cc >= mincc );
+            carts = await carts.map(c => c.features.cc >= mincc );
         }
         if(type) {
-            carts = carts.map(c => c.features.typeCart === type);
+            carts = await carts.map(c => c.features.typeCart === type);
         }
         return carts;
     }
-    get(id) {
-        const cart = cartsDatabase.get(id);
+    async get(id) {
+        const cart = await cartsDatabase.get(id);
+        if(cart === null) {
+            throw new Error('Not found item');
+        }
         return cart;
     }
-    create(data){
-        const newCartId = cartsDatabase.create(data);
+    async create(data , auth){
+        const newCartId = await cartsDatabase.create(data);
         return newCartId;
     }
-    update(id , data) {
-        const updatedCart = cartsDatabase.patch(id , data);
+    async update(id , data , auth ) {
+        const updatedCart = await cartsDatabase.patch(id , data);
         return updatedCart;
     }
-    delete(id) {
-        const deletedCart = cartsDatabase.delete(id);
+    async delete(id , auth) {
+        const deletedCart = await cartsDatabase.delete(id);
 
         return deletedCart;
     }
