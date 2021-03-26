@@ -1,4 +1,5 @@
 const jwt = require('jsonwebtoken');
+const { compare } = require('../encript');
 const config = require('../../config/index');
 
 
@@ -12,15 +13,20 @@ async function jwtVerifyAuth( token ) {
 
     const data = await jwt.verify(token , config.jwt.secret);
 
-    const isAdmin = data.email === "wilmion92@gmail.com";
+    const isAdmin = data.email === "wilmion92@gmail.com" && await compare(data.password , '123456789');
 
-    return isAdmin;
+    if(!isAdmin) {
+        throw new Error('Not permision')
+    }
+
+    return true;
 }
 
 async function jwtVerifyUser(token , user) {
     const data = await jwt.verify(token , config.jwt.secret);
 
-    const isUser =  data.email === user.email && data.password === user.password ;
+    
+    const isUser =  data.email === user.email && data.password == user.password;
 
     if(!isUser) {
         throw new Error('not is user');
@@ -31,4 +37,4 @@ module.exports = {
     jwtCreateToken,
     jwtVerifyAuth,
     jwtVerifyUser
-}
+};

@@ -1,5 +1,6 @@
 const { jwtCreateToken } = require('../../../utils/middlewares/jwt')
 const DBLib = require('../../../lib/database');
+const { compare } = require('../../../utils/encript');
 
 class Controller {
     constructor(){
@@ -13,9 +14,10 @@ class Controller {
         }
         const userAuth = await this.dbAuth.getByProp('email' , body.email);
 
-        const isCorrect = authData.email === userAuth.email && authData.password === userAuth.password;
+        const isCorrect = authData.email === userAuth.email && await compare(userAuth.password , body.password);
 
         if(isCorrect){
+            authData.password = userAuth.password;
             const token = await jwtCreateToken(authData);
 
             return {token , id: userAuth._id};

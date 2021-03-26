@@ -1,4 +1,5 @@
 const DBLib = require('../../../lib/database');
+const { encript } = require('../../../utils/encript');
 
 const { jwtVerifyAuth , jwtVerifyUser } = require('../../../utils/middlewares/jwt')
 
@@ -11,7 +12,7 @@ class Controller {
     async register(body) {
         const authData = {
             email: body.email,
-            password: body.password
+            password: await encript(body.password)
         }
         const existUser = await this.dbAuth.getByProp('email' , body.email);
 

@@ -1,7 +1,6 @@
-const response = require('../../../utils/response/index');
-const dummy = require('../../../utils/dummy/dummy');
-
 const DB = require('../../../lib/database');
+
+const { jwtVerifyAuth } = require('../../../utils/middlewares/jwt')
 
 const cartsDatabase = new DB('carts') 
 
@@ -14,13 +13,13 @@ class controllerCarts {
         let carts = await cartsDatabase.getAll(Number(limit));
 
         if(mark) {
-            carts = await carts.map(c => c.mark === mark);
+            carts = carts.filter(c => c.mark === mark);
         }
         if(mincc) {
-            carts = await carts.map(c => c.features.cc >= mincc );
+            carts = carts.filter(c => c.features.cc >= mincc );
         }
         if(type) {
-            carts = await carts.map(c => c.features.typeCart === type);
+            carts = carts.filter(c => c.features.typeCart === type);
         }
         return carts;
     }
@@ -32,14 +31,28 @@ class controllerCarts {
         return cart;
     }
     async create(data , auth){
+        const token = auth.replace('Bearer ' , '')
+
+        await jwtVerifyAuth(token);
+
         const newCartId = await cartsDatabase.create(data);
+
         return newCartId;
     }
     async update(id , data , auth ) {
+        const token = auth.replace('Bearer ' , '')
+
+        await jwtVerifyAuth(token);
+
         const updatedCart = await cartsDatabase.patch(id , data);
+
         return updatedCart;
     }
     async delete(id , auth) {
+        const token = auth.replace('Bearer ' , '')
+
+        await jwtVerifyAuth(token);
+
         const deletedCart = await cartsDatabase.delete(id);
 
         return deletedCart;
