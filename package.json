@@ -4,8 +4,6 @@
   "description": "Api de la pagina de rent cards de mi portafolio",
   "main": "api/server.js",
   "scripts": {
-    "dev": "nodemon server.js",
-    "build": "node server.js"
   },
   "repository": {
     "type": "git",
