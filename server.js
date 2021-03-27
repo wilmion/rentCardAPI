@@ -11,6 +11,12 @@ const errorMiddleware = require('./utils/middlewares/errorHandler');
 const notFoundMidleware = require('./utils/middlewares/notFound');
 
 app.use(express.json());
+app.use((req, res, next) => {
+    res.header('Access-Control-Allow-Origin', "*");
+    res.header('Access-Control-Allow-Methods','GET,PUT,POST,DELETE');
+    res.header('Access-Control-Allow-Headers', 'Content-Type');
+    next();
+})
 router(app);
 app.use('*' , notFoundMidleware );
 app.use(errorMiddleware);
