@@ -70,13 +70,17 @@ class Controller {
         if(body.email || body.password) {
             const newAuth = {
                 email: body.email? body.email : userAuth.email,
-                password: body.password? body.password : userAuth.password
+                password: body.password? await encript(body.password) : userAuth.password
             }
 
-            this.dbAuth.patch(id , newAuth);
+            await this.dbAuth.patch(id , newAuth);
         }
 
-        const { password : not , ...data } = body
+        const { password : not , ...data } = body;
+
+        if(Object.keys(data).length === 0) {
+            return 'User updated';
+        }
 
         const user = await this.dbUser.getByProp('email' , userAuth.email);
 
