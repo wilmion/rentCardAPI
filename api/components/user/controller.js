@@ -91,18 +91,18 @@ class Controller {
         return 'User updated';
     }
     async deleteUser(id , auth) {
-        const userAuth = await this.dbAuth.get(id);
+        const userAuth = await this.dbUser.get(id);
 
         const token = auth.replace('Bearer ' , '')
 
         await jwtVerifyAuth(token);
 
-        const user = await this.dbUser.getByProp('email' , userAuth.email);
+        const user = await this.dbAuth.getByProp('email' , userAuth.email);
 
         const { _id } = user;
 
-        await this.dbAuth.delete(id);
-        await this.dbUser.delete(_id);
+        await this.dbAuth.delete(_id);
+        await this.dbUser.delete(id);
 
         return 'Delete success user';
     }
