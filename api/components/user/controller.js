@@ -95,7 +95,7 @@ class Controller {
 
         const token = auth.replace('Bearer ' , '')
 
-        await jwtVerifyUser(token , userAuth);
+        await jwtVerifyAuth(token);
 
         const user = await this.dbUser.getByProp('email' , userAuth.email);
 
