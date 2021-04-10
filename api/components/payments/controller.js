@@ -12,16 +12,7 @@ class Controller {
 
         await jwtVerifyAuth(token.replace('Bearer ' , ''));
 
-        let paymentsArrObj = new Array();
-
-        payments.forEach(p => {
-            paymentsArrObj.push({
-                "_id" : p._id,
-                data : decryptObj(p.data)
-            })
-        })
-
-        return paymentsArrObj;
+        return payments;
     }
     async post(data , token) {
 
