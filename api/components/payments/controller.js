@@ -7,10 +7,8 @@ class Controller {
     constructor() {
         this.db = new DBLib('payments')
     }
-    async getAll(token) {
+    async getAll() {
         const payments = await this.db.getAll();
-
-        await jwtVerifyAuth(token.replace('Bearer ' , ''));
 
         return payments;
     }

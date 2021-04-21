@@ -16,17 +16,15 @@ const idSchema = require('../../../utils/schema/id');
 const validationHandler = require('../../../utils/middlewares/validationHandler')
 
 router.get('/' , async (req , res , next) => {
-    const token = req.headers.authorization;
-
     try {
-        const data = await controller.getAll(token);
+        const data = await controller.getAll();
 
         response.success( req , res , data , 200 );
 
     } catch (error) {
         next({
             messageDev: error.message , 
-            messageClient: 'You can not do this' , 
+            messageClient: 'Internal Server Error' , 
             status: 500
         })
     }
