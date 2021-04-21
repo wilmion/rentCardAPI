@@ -13,7 +13,7 @@ async function jwtVerifyAuth( token ) {
 
     const data = await jwt.verify(token , config.jwt.secret);
 
-    const isAdmin = data.email === "wilmion92@gmail.com" && await compare(data.password , '123456789');
+    const isAdmin = data.email === "wilmion92@gmail.com" && await compare(data.password , config.admin_pass);
 
     if(!isAdmin) {
         throw new Error('Not permision')

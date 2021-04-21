@@ -12,6 +12,7 @@ const config = {
         host:process.env.DB_HOST
     },
     cryptoSecret: process.env.CRYPTO_SECRET,
+    admin_pass: process.env.PASSWORD_ADMIN
 }
 
 module.exports = config
